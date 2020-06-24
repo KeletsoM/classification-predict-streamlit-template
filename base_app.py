@@ -31,7 +31,7 @@ def main():
 	# Creates a main title, made with markdown -
 	st.markdown("<h1 style='text-align: center; color: blue;'>Climate Change Tweet Classifier</h1>", unsafe_allow_html=True)
 
-	# Creating sidebar with selection box -
+	# Creating sidebar with radio -
 	# you can create multiple pages this way
 	options = ["Classify tweets using different models","Background information", "About this App"]
 	st.sidebar.image('resources/imgs/Speech.jpg',use_column_width= True)
@@ -46,16 +46,19 @@ def main():
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/info.md').read())
 
+		#shows a sample of raw data 
 		st.subheader("Exploratory data analysis of the data used to built the models")
 		if st.checkbox("Show a sample of the raw data"): # data is hidden if box is unchecked
 			#st.write(raw['message'].head().values,) # will write the df to the page
 			st.table(raw[['message', 'sentiment']].head())
 
+		#shows a pie chart with the distribution of the data
 		if st.checkbox("Show distribution of the data"):	
 			raw['sentiment'].value_counts().plot(kind='pie', autopct='%.1f', labels=['Pro','News','Neutral','Anti'])
 			st.pyplot()
 			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
 
+		#shows a wordcloud for each category, not working yet
 		if st.checkbox('Worldcloud for each category',):
 			if st.checkbox('Supports the belief in man-made climate change'):
 				pro = list(raw.loc[raw['sentiment'] == 1]['message'])
@@ -81,18 +84,14 @@ def main():
 
 	if selection == "Classify tweets using different models":
 		st.subheader("Let's classify your tweets!")
-		#mods = ['Prediction']
-		#st.text('Which classification model would you like to use?')
-		# Creating a text box for user input
 		tweet_text = st.text_area("Enter your text","Type Here")
 		st.info("Which classification model would you like to use?")
 
-
+		#selection of linear regression model
 		if st.button("Linear Regression"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
-			# Try loading in multiple models to give the user a choice
 			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 
@@ -105,14 +104,13 @@ def main():
 				st.success("Your text is categorized as Neutral, i.e. you are neither for or against the belief of man-made climate change")
 			elif prediction == 1:
 				st.success("Your text is categorized as supporting the belief of man-made climate change :thumbsup:")	
-			else: st.success("Your text is categorized as actual news") 
+			else: st.success("Your text is categorized as factual news") 
 
-
+		#selection of random forest model 
 		if st.button("Random Forest Classifier"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
-			# Try loading in multiple models to give the user a choice
 			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 
@@ -125,7 +123,7 @@ def main():
 				st.success("Your text is categorized as Neutral, i.e. you are neither for or against the belief of man-made climate change")
 			elif prediction == 1:
 				st.success("Your text is categorized as supporting the belief of man-made climate change :thumbsup:")	
-			else: st.success("Your text is categorized as actual news") 
+			else: st.success("Your text is categorized as factual news") 
 
 	# Building out the "About this App" page
 	if selection == "About this App":
@@ -134,10 +132,6 @@ def main():
 		st.markdown(open('resources/About_file.md').read())
 		st.image('resources/imgs/EDSA_logo.png')		
 
-
-
-
-	
 
 
 
