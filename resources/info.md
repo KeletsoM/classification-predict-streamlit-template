@@ -1,16 +1,10 @@
-###  How it works
+#
 
-This process requires the user to input text
-(ideally a tweet relating to climate change), and will
-classify it according to whether or not they believe in
-climate change.Below you will find information about the data source
-and a brief data description. You can have a look at word clouds and
-other general EDA on the EDA page, and make your predictions on the
-prediction page that you can navigate to in the sidebar.
+The aim of this project was to build a model that could classify climate change tweets.
 
-###  Data description as per source
+Data description as per source:
 
-The collection of this data was funded by a Canada Foundation for Innovation JELF Grant to Chris Bauch, University of Waterloo.
+The collection of the data used to build the classification models used in this App was funded by a Canada Foundation for Innovation JELF Grant to Chris Bauch, University of Waterloo.
 
 This dataset aggregates tweets pertaining to climate change collected between Apr 27, 2015 and Feb 21, 2018. In total, 43943 tweets were annotated. Each tweet is labelled independently by 3 reviewers. This dataset only contains tweets that all 3 reviewers agreed on (the rest were discarded).
 
