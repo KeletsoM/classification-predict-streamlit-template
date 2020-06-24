@@ -5,6 +5,15 @@ import joblib,os
 
 # Data dependencies
 import pandas as pd
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set_style('darkgrid')
+from wordcloud import WordCloud
+import re 
+import string
+from nltk.stem import WordNetLemmatizer
+
 
 # Vectorizer
 news_vectorizer = open("resources/tfidfvect.pkl","rb")
