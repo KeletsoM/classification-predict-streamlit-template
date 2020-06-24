@@ -46,7 +46,7 @@ def main():
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
-	options = ["Prediction", "Information"]
+	options = ["Prediction", "Information","About Model","Training data"]
 	selection = st.sidebar.selectbox("Choose Option", options)
 
 	# Building out the "Information" page
@@ -58,6 +58,14 @@ def main():
 		st.subheader("Raw Twitter data and label")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
 			st.write(raw[['sentiment', 'message']]) # will write the df to the page
+	
+	#Building the About Model  page
+	if selection == "About Model":
+		st.info("Information about the particular model we've chosen")
+
+	#Building the Training data
+	if selection == "Training data":
+		st.info("This is where our EDA will go in order to highlight the differences in the 4 categories")
 
 	# Building out the predication page
 	if selection == "Prediction":
