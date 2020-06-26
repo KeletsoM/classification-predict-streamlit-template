@@ -45,6 +45,7 @@ def main():
 	# Building EDA page
 	if selection == 'Exploratory Data analysis':
 		#shows a pie chart with the distribution of the data
+		sent_dict = {"Anti":-1,"Neutral":0,"Pro":1,'Factual news':2}
 		if st.checkbox("Show distribution of the data"):	
 			raw['sentiment'].value_counts().plot(kind='pie', autopct='%.1f', labels=['Pro','News','Neutral','Anti'])
 			st.pyplot()
@@ -54,15 +55,17 @@ def main():
 		if st.checkbox("Show Most mentioned acount"):
 
 			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
-			sent = st.slider('sentiment',0,3,0)
-			tweet_occurence_graph(raw, sentiment=sent-1, top_n=10, color='cadetblue')
+			opt2 = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'],key='Pro')
+			tweet_occurence_graph(raw, sentiment=sent_dict[opt2], top_n=10, color='cadetblue')
 			st.pyplot()
 		
 		if st.checkbox("Show most ocurring hashtags"):
 			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
-			sent1 = st.slider('sentiment',0,3,1)
-			tweet_occurence_graph(raw, sentiment=sent1-1,pattern="hashtags", top_n=10, color='cadetblue')
+			opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
+			tweet_occurence_graph(raw, sentiment= sent_dict[opt],pattern="hashtags", top_n=10, color='cadetblue')
 			st.pyplot()
+
+		#opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
 
 
 	# Building out the "Background information" page
