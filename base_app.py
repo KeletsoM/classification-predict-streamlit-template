@@ -14,11 +14,14 @@ import re
 import string
 from nltk.stem import WordNetLemmatizer
 
+# Plot functions
+from Plot_funct import tweet_occurence_graph
 # Vectorizer
 news_vectorizer = open("resources/tfidfvect.pkl","rb")
 tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
+
 raw = pd.read_csv("resources/train.csv")
 
 #some functions for text preprocessing for wordclouds
@@ -29,16 +32,38 @@ def main():
 	"""Tweet Classifier App with Streamlit """
 
 	# Creates a main title, made with markdown -
-	st.markdown("<h1 style='text-align: center; color: blue;'>Climate Change Tweet Classifier</h1>", unsafe_allow_html=True)
-
+	st.markdown("<h1 style='text-align: center; color: #3498DB;'>Climate Change Tweet Classifier</h1>", unsafe_allow_html=True)
+	st.image('resources/imgs/Speech.jpg',use_column_width= True)
 	# Creating sidebar with radio -
 	# you can create multiple pages this way
-	options = ["Classify tweets using different models","Background information", "About this App"]
-	st.sidebar.image('resources/imgs/Speech.jpg',use_column_width= True)
+	options = ["Classify A Tweet","Background information", "About this App",'Exploratory Data analysis', "What is climate change"]
+	st.sidebar.image('resources/imgs/markus.jpg',use_column_width= True)
 	st.sidebar.title(":cloud: Tweet Classification :cloud:")
 	selection = st.sidebar.radio("What would you like to see?", options)
 	st.sidebar.info("Hi! This is an App developed by JHB Classification Team SS3. For more information check out the 'About this App' page")
 	
+	# Building EDA page
+	if selection == 'Exploratory Data analysis':
+		#shows a pie chart with the distribution of the data
+		if st.checkbox("Show distribution of the data"):	
+			raw['sentiment'].value_counts().plot(kind='pie', autopct='%.1f', labels=['Pro','News','Neutral','Anti'])
+			st.pyplot()
+			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
+
+		#
+		if st.checkbox("Show Most mentioned acount"):
+
+			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
+			sent = st.slider('sentiment',0,3,0)
+			tweet_occurence_graph(raw, sentiment=sent-1, top_n=10, color='cadetblue')
+			st.pyplot()
+		
+		if st.checkbox("Show most ocurring hashtags"):
+			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
+			sent1 = st.slider('sentiment',0,3,1)
+			tweet_occurence_graph(raw, sentiment=sent1-1,pattern="hashtags", top_n=10, color='cadetblue')
+			st.pyplot()
+
 
 	# Building out the "Background information" page
 	if selection == "Background information":
@@ -52,37 +77,18 @@ def main():
 			#st.write(raw['message'].head().values,) # will write the df to the page
 			st.table(raw[['message', 'sentiment']].head())
 
-		#shows a pie chart with the distribution of the data
-		if st.checkbox("Show distribution of the data"):	
-			raw['sentiment'].value_counts().plot(kind='pie', autopct='%.1f', labels=['Pro','News','Neutral','Anti'])
-			st.pyplot()
-			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
+		
 
-		#shows a wordcloud for each category, not working yet
-		if st.checkbox('Worldcloud for each category',):
-			if st.checkbox('Supports the belief in man-made climate change'):
-				pro = list(raw.loc[raw['sentiment'] == 1]['message'])
-				wordcloud = WordCloud().generate(pro)
-				plt.imshow(wordcloud, interpolation='bilinear')
-				plt.axis("off")
-				plt.title('Pro:supports the belief in man-made climate change')
-				plt.show()
-				st.pyplot()
-			# 	st.plot (pro, title = 'Pro:supports the belief in man-made climate change')	
-			# if st.checkbox('Does not support the belief in man-made climate change'):
-			# 	anti = raw.loc[raw['sentiment'] == -1]['message']
-			# 	plot_wordcloud(anti, title = 'Anti: does not support the belief in man-made climate change')	
-			# if st.checkbox('Neutral'):
-			# 	neutral = raw.loc[raw['sentiment'] == 0]['message']
-			# 	plot_wordcloud(neutral, title = 'Neutral: neither supports nor denies the belief in man-made climate change')	
-			# if st.checkbox('Factual news'):
-			# 	news = raw.loc[raw['sentiment'] == 2]['message']
-			# 	plot_wordcloud(news, title = 'Factual news')	
-
-
+			
+	if selection == "What is climate change":
+		st.info("An Educational video on Climate change and it's effects")
+		video_file = open('resources/imgs/climate_change.mp4', 'rb')
+		video_bytes = video_file.read()
+		st.video(video_bytes)
+		
 	# Building out the classification models page
 
-	if selection == "Classify tweets using different models":
+	if selection == "Classify A Tweet":
 		st.subheader("Let's classify your tweets!")
 		tweet_text = st.text_area("Enter your text","Type Here")
 		st.info("Which classification model would you like to use?")
