@@ -33,7 +33,7 @@ def main():
 
 	# Creates a main title, made with markdown -
 	st.markdown("<h1 style='text-align: center; color: #3498DB;'>Climate Change Tweet Classifier</h1>", unsafe_allow_html=True)
-	st.image('resources/imgs/Speech.jpg',use_column_width= True)
+	
 	# Creating sidebar with radio -
 	# you can create multiple pages this way
 	options = ["Classify A Tweet",'Exploratory Data analysis', "What is climate change?","About this App","Background information"]
@@ -44,6 +44,8 @@ def main():
 	
 	# Building EDA page
 	if selection == 'Exploratory Data analysis':
+		st.image('resources/imgs/Datavisual.jpeg',use_column_width= True)
+		st.markdown("<h2 style='text-align: center; color: #3498DB;'>Exploratory Data Analysis</h2>", unsafe_allow_html=True)
 		#shows a pie chart with the distribution of the data
 		sent_dict = {"Anti":-1,"Neutral":0,"Pro":1,'Factual news':2}
 		if st.checkbox("Show distribution of the data"):	
@@ -52,14 +54,14 @@ def main():
 			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
 
 		#
-		if st.checkbox("Show Most mentioned acount"):
+		if st.checkbox("Show Most mentioned Twitter account"):
 
 			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
 			opt2 = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'],key='Pro')
 			tweet_occurence_graph(raw, sentiment=sent_dict[opt2], top_n=10, color='cadetblue')
 			st.pyplot()
 		
-		if st.checkbox("Show most ocurring hashtags"):
+		if st.checkbox("Show most occurring hashtags"):
 			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
 			opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
 			tweet_occurence_graph(raw, sentiment= sent_dict[opt],pattern="hashtags", top_n=10, color='cadetblue')
@@ -84,7 +86,9 @@ def main():
 
 			
 	if selection == "What is climate change?":
-		st.info("An Educational video on Climate change and it's effects")
+		st.image('resources/imgs/climate-cold.jpg',use_column_width= True)
+		st.markdown("<h2 style='text-align: center; color: #3498DB;'>What Is Climate Change?</h2>", unsafe_allow_html=True)
+		st.markdown("<p style='text-align: center; color: #3498DB;'>Climate change, also called global warming, refers to the rise in average surface temperatures on Earth. An overwhelming scientific consensus maintains that climate change is due primarily to the human use of fossil fuels, which releases carbon dioxide and other greenhouse gases into the air. The gases trap heat within the atmosphere, which can have a range of effects on ecosystems, including rising sea levels, severe weather events, and droughts that render landscapes more susceptible to wildfires.</p>", unsafe_allow_html=True)
 		video_file = open('resources/imgs/climate_change.mp4', 'rb')
 		video_bytes = video_file.read()
 		st.video(video_bytes)
@@ -92,6 +96,7 @@ def main():
 	# Building out the classification models page
 
 	if selection == "Classify A Tweet":
+		st.image('resources/imgs/Speech.jpg',use_column_width= True)
 		st.subheader("Let's classify your tweets!")
 		tweet_text = st.text_area("Enter your text","Type Here")
 		st.info("Which classification model would you like to use?")
