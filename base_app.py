@@ -36,7 +36,7 @@ def main():
 	st.image('resources/imgs/Speech.jpg',use_column_width= True)
 	# Creating sidebar with radio -
 	# you can create multiple pages this way
-	options = ["Classify A Tweet","Background information", "About this App",'Exploratory Data analysis', "What is climate change"]
+	options = ["Classify A Tweet",'Exploratory Data analysis', "What is climate change?","About this App","Background information"]
 	st.sidebar.image('resources/imgs/markus.jpg',use_column_width= True)
 	st.sidebar.title(":cloud: Tweet Classification :cloud:")
 	selection = st.sidebar.radio("What would you like to see?", options)
