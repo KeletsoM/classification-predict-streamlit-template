@@ -80,7 +80,7 @@ def main():
 		
 
 			
-	if selection == "What is climate change":
+	if selection == "What is climate change?":
 		st.info("An Educational video on Climate change and it's effects")
 		video_file = open('resources/imgs/climate_change.mp4', 'rb')
 		video_bytes = video_file.read()
