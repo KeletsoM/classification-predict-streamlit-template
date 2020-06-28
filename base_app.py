@@ -17,7 +17,7 @@ from nltk.stem import WordNetLemmatizer
 # Plot functions
 from Plot_funct import tweet_occurence_graph
 # Vectorizer
-news_vectorizer = open("resources/tfidfvect.pkl","rb")
+news_vectorizer = open("resources/vector.pkl","rb")
 tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
@@ -25,6 +25,14 @@ tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl f
 raw = pd.read_csv("resources/train.csv")
 
 #some functions for text preprocessing for wordclouds
+def pred(prediction):
+	if prediction == -1:
+		st.success("Your text is categorized as being against the belief of man-made climate change :thumbsdown:")
+	elif prediction == 0:
+		st.success("Your text is categorized as Neutral, i.e. you are neither for or against the belief of man-made climate change")
+	elif prediction == 1:
+		st.success("Your text is categorized as supporting the belief of man-made climate change :thumbsup:")	
+	else: st.success("Your text is categorized as factual news") 
 
 
 # The main function where we will build the actual app
@@ -36,12 +44,14 @@ def main():
 	
 	# Creating sidebar with radio -
 	# you can create multiple pages this way
-	options = ["Classify A Tweet",'Exploratory Data analysis', "What is climate change?","About this App","Background information"]
+	options = ["Classify A Tweet",'Exploratory Data analysis',"About classification models", "What is climate change?","About this App","Background information",]
 	st.sidebar.image('resources/imgs/markus.jpg',use_column_width= True)
 	st.sidebar.title(":cloud: Tweet Classification :cloud:")
 	selection = st.sidebar.radio("What would you like to see?", options)
 	st.sidebar.info("Hi! This is an App developed by JHB Classification Team SS3. For more information check out the 'About this App' page")
 	
+
+
 	# Building EDA page
 	if selection == 'Exploratory Data analysis':
 		st.image('resources/imgs/Datavisual.jpeg',use_column_width= True)
@@ -53,38 +63,32 @@ def main():
 			st.pyplot()
 			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
 
-		#
+		#Build the most mentiond twitter handle
 		if st.checkbox("Show Most mentioned Twitter account"):
 
-			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
+			st.info("The graph below shows the most occuring twitter handle amomst the different sentiment groups")
 			opt2 = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'],key='Pro')
 			tweet_occurence_graph(raw, sentiment=sent_dict[opt2], top_n=10, color='cadetblue')
 			st.pyplot()
 		
 		if st.checkbox("Show most occurring hashtags"):
-			st.info("The graph below shows the most mentioned account amongst people with the view that climate change is not a man made phenomenon")
+			st.info("The graph below shows the most occuring hashtags amomst the different sentiment groups")
 			opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
 			tweet_occurence_graph(raw, sentiment= sent_dict[opt],pattern="hashtags", top_n=10, color='cadetblue')
 			st.pyplot()
-
-		#opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
-
 
 	# Building out the "Background information" page
 	if selection == "Background information":
 		st.subheader("Background information")
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/info.md').read())
-
 		#shows a sample of raw data 
 		st.subheader("Exploratory data analysis of the data used to built the models")
 		if st.checkbox("Show a sample of the raw data"): # data is hidden if box is unchecked
 			#st.write(raw['message'].head().values,) # will write the df to the page
 			st.table(raw[['message', 'sentiment']].head())
 
-		
-
-			
+	#Building the Educational page		
 	if selection == "What is climate change?":
 		st.image('resources/imgs/climate-cold.jpg',use_column_width= True)
 		st.markdown("<h2 style='text-align: center; color: #3498DB;'>What Is Climate Change?</h2>", unsafe_allow_html=True)
@@ -93,8 +97,7 @@ def main():
 		video_bytes = video_file.read()
 		st.video(video_bytes)
 		
-	# Building out the classification models page
-
+	#Building out the classification models page
 	if selection == "Classify A Tweet":
 		st.image('resources/imgs/Speech.jpg',use_column_width= True)
 		st.subheader("Let's classify your tweets!")
@@ -106,47 +109,49 @@ def main():
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
-			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
+			predictor = joblib.load(open(os.path.join("resources/linear_svc.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
-
+			pred(prediction)
 			# When model has successfully run, will print prediction
 			# You can use a dictionary or similar structure to make this output
 			# more human interpretable.
-			if prediction == -1:
-				st.success("Your text is categorized as being against the belief of man-made climate change :thumbsdown:")
-			elif prediction == 0:
-				st.success("Your text is categorized as Neutral, i.e. you are neither for or against the belief of man-made climate change")
-			elif prediction == 1:
-				st.success("Your text is categorized as supporting the belief of man-made climate change :thumbsup:")	
-			else: st.success("Your text is categorized as factual news") 
 
-		#selection of random forest model 
-		if st.button("Random Forest Classifier"):
+		# selection of random forest model 
+		if st.button("Logistic regression"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
 			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
-
+			pred(prediction)
 			# When model has successfully run, will print prediction
 			# You can use a dictionary or similar structure to make this output
 			# more human interpretable.
-			if prediction == -1:
-				st.success("Your text is categorized as being against the belief of man-made climate change :thumbsdown:")
-			elif prediction == 0:
-				st.success("Your text is categorized as Neutral, i.e. you are neither for or against the belief of man-made climate change")
-			elif prediction == 1:
-				st.success("Your text is categorized as supporting the belief of man-made climate change :thumbsup:")	
-			else: st.success("Your text is categorized as factual news") 
 
+		if st.button("Voting Classifier"):
+			# Transforming user input with vectorizer
+			vect_text = tweet_cv.transform([tweet_text]).toarray()
+			# Load your .pkl file with the model of your choice + make predictions
+			predictor = joblib.load(open(os.path.join("resources/voting_classifier.pkl"),"rb"))
+			prediction = predictor.predict(vect_text)
+			pred(prediction)
+			# When model has successfully run, will print prediction
+			# You can use a dictionary or similar structure to make this output
+			# more human interpretable.
+
+		
+
+	# Building About model page
+	if selection == "About classification models":
+		st.image("resources/imgs/ai-header.png")
+		st.markdown("<h2 style='text-align: center; color: #3498DB;'>LinearSVC</h2>", unsafe_allow_html=True)
 	# Building out the "About this App" page
 	if selection == "About this App":
+		st.image('resources/imgs/blackboard.jpg',use_column_width=True)
 		st.subheader("About this App")
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/About_file.md').read())
 		st.image('resources/imgs/EDSA_logo.png')		
-
-
 
 
 # Required to let Streamlit instantiate our web app.  
