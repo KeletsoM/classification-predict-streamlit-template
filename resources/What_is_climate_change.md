@@ -1,0 +1,2 @@
+
+Climate change, also called global warming, refers to the rise in average surface temperatures on Earth. An overwhelming scientific consensus maintains that climate change is due primarily to the human use of fossil fuels, which releases carbon dioxide and other greenhouse gases into the air. These gases trap heat within the atmosphere, which can have a range of effects on ecosystems, including rising sea levels, severe weather events, and droughts that render landscapes more susceptible to wildfires. 
