@@ -8,4 +8,4 @@ There are many models that can be used for classification, in this App three wer
 - Logistic Regression
 - Voting Classifier
 
-To learn more about these models, please visit this page:
+To learn more about classification, please visit this page: https://brilliant.org/wiki/classification/
