@@ -145,6 +145,9 @@ def main():
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/About_file.md').read())
 		st.image('resources/imgs/EDSA_logo.png')
+		st.image('resources/imgs/kaggle-logo.png', use_column_width= True)
+
+
 		
 
 
