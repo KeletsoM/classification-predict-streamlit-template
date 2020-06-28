@@ -61,7 +61,7 @@ def main():
 		if st.checkbox("Show distribution of the data"):	
 			raw['sentiment'].value_counts().plot(kind='pie', autopct='%.1f', labels=['Pro','News','Neutral','Anti'])
 			st.pyplot()
-			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
+			st.info("The categories in the above data is clearly unbalanced. We can see that 52.3% of the tweets supports the belief of man-made climate change (Pro), 21.1% are based on factual news about climate change (News), 17.6% of the tweets are rather neutral on the subject (Neutral), and 9.1% do not believe in man-made climate change (Anti). ")
 
 		#Build the most mentiond twitter handle
 		if st.checkbox("Show most mentioned Twitter account"):
