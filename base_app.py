@@ -44,7 +44,7 @@ def main():
 	
 	# Creating sidebar with radio -
 	# you can create multiple pages this way
-	options = ["Classify A Tweet",'Exploratory Data analysis',"About classification models", "What is climate change?","About this App","Background information",]
+	options = ["Classify A Tweet",'Exploratory Data analysis',"About classification models","Background information", "What is climate change?","About this App"]
 	st.sidebar.image('resources/imgs/markus.jpg',use_column_width= True)
 	st.sidebar.title(":cloud: Tweet Classification :cloud:")
 	selection = st.sidebar.radio("What would you like to see?", options)
@@ -64,15 +64,15 @@ def main():
 			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
 
 		#Build the most mentiond twitter handle
-		if st.checkbox("Show Most mentioned Twitter account"):
+		if st.checkbox("Show most mentioned Twitter account"):
 
-			st.info("The graph below shows the most occuring twitter handle amomst the different sentiment groups")
+			st.info("The graph below shows the most occuring twitter handle amongst the different sentiment groups")
 			opt2 = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'],key='Pro')
 			tweet_occurence_graph(raw, sentiment=sent_dict[opt2], top_n=10, color='cadetblue')
 			st.pyplot()
 		
 		if st.checkbox("Show most occurring hashtags"):
-			st.info("The graph below shows the most occuring hashtags amomst the different sentiment groups")
+			st.info("The graph below shows the most occuring hashtags amongst the different sentiment groups")
 			opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
 			tweet_occurence_graph(raw, sentiment= sent_dict[opt],pattern="hashtags", top_n=10, color='cadetblue')
 			st.pyplot()
@@ -83,7 +83,6 @@ def main():
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/info.md').read())
 		#shows a sample of raw data 
-		st.subheader("Exploratory data analysis of the data used to built the models")
 		if st.checkbox("Show a sample of the raw data"): # data is hidden if box is unchecked
 			#st.write(raw['message'].head().values,) # will write the df to the page
 			st.table(raw[['message', 'sentiment']].head())
@@ -112,9 +111,7 @@ def main():
 			predictor = joblib.load(open(os.path.join("resources/linear_svc.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
+			
 
 		# selection of random forest model 
 		if st.button("Logistic regression"):
@@ -124,9 +121,7 @@ def main():
 			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
+			
 
 		if st.button("Voting Classifier"):
 			# Transforming user input with vectorizer
@@ -135,16 +130,13 @@ def main():
 			predictor = joblib.load(open(os.path.join("resources/voting_classifier.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
-
-		
+					
 
 	# Building About model page
 	if selection == "About classification models":
 		st.image("resources/imgs/ai-header.png")
 		st.markdown("<h2 style='text-align: center; color: #3498DB;'>LinearSVC</h2>", unsafe_allow_html=True)
+
 	# Building out the "About this App" page
 	if selection == "About this App":
 		st.image('resources/imgs/blackboard.jpg',use_column_width=True)
