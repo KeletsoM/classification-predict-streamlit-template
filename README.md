@@ -13,13 +13,7 @@ For this repository, the file required to run this app is:
 | :--------------------- | :--------------------             |
 | `base_app.py`          | Streamlit application definition. |
 
-## 2) Usage Instructions
-
-#### 2.1) Running the **Climate Change Tweet Classifier** web app on your local machine
-
-Follow the steps below by running the given commands within a Git bash (Windows), or terminal (Mac/Linux):
-
- 1. Ensure that you have the prerequisite Python libraries installed on your local machine:
+## 2) Prerequisite Python libraries
 
 ```python
 streamlit
@@ -33,7 +27,15 @@ string
 nltk
 ```
 
- 2. Clone the *forked* repo to your local machine.
+## 3) Usage Instructions
+
+#### 3.1) Running the **Climate Change Tweet Classifier** web app on your local machine
+
+Follow the steps below by running the given commands within a Git bash (Windows), or terminal (Mac/Linux):
+
+ 1. Ensure that you have the prerequisite Python libraries installed on your local machine
+
+ 2. Clone this *forked* repo to your local machine.
 
  ```bash
  git clone https://github.com/{your-account-name}/classification-predict-streamlit-template.git
@@ -49,7 +51,7 @@ nltk
  If the web server was able to initialise successfully, the following message should be displayed within your bash/terminal session:
 
   You can now view your Streamlit app in your browser.
-  
+
 ```bash
     Local URL: http://localhost:8501
     Network URL: http://192.168.43.41:8501
