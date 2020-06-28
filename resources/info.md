@@ -1,12 +1,11 @@
-#
 
-The aim of this project was to build a model that could classify climate change tweets.
+The aim of this project was to build models that could classify climate change tweets.
 
 Data description as per source:
 
-The collection of the data used to build the classification models used in this App was funded by a Canada Foundation for Innovation JELF Grant to Chris Bauch, University of Waterloo.
+The collection of the data was funded by a Canada Foundation for Innovation JELF Grant to Chris Bauch, University of Waterloo.
 
-This dataset aggregates tweets pertaining to climate change collected between Apr 27, 2015 and Feb 21, 2018. In total, 43943 tweets were annotated. Each tweet is labelled independently by 3 reviewers. This dataset only contains tweets that all 3 reviewers agreed on (the rest were discarded).
+This dataset aggregates tweets pertaining to climate change collected between Apr 27, 2015 and Feb 21, 2018. In total, 43943 tweets were annotated. Each tweet was labelled independently by 3 reviewers. This dataset only contains tweets that all 3 reviewers agreed on (the rest were discarded).
 
 Each tweet is labelled as one of the following classes:
 
