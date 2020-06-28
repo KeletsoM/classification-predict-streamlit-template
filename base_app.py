@@ -66,13 +66,13 @@ def main():
 		#Build the most mentiond twitter handle
 		if st.checkbox("Show most mentioned Twitter account"):
 
-			st.info("The graph below shows the most occuring twitter handle amongst the different sentiment groups")
+			st.info("The graph below shows the most occurring twitter handle amongst the different sentiment groups")
 			opt2 = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'],key='Pro')
 			tweet_occurence_graph(raw, sentiment=sent_dict[opt2], top_n=10, color='cadetblue')
 			st.pyplot()
 		
 		if st.checkbox("Show most occurring hashtags"):
-			st.info("The graph below shows the most occuring hashtags amongst the different sentiment groups")
+			st.info("The graph below shows the most occurring hashtags amongst the different sentiment groups")
 			opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
 			tweet_occurence_graph(raw, sentiment= sent_dict[opt],pattern="hashtags", top_n=10, color='cadetblue')
 			st.pyplot()
