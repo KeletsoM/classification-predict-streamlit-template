@@ -3,7 +3,7 @@
 
 ## 1) Overview
 
-This repository hosts the files needed to deploy **Climate Change Tweet Classifier App**, which was built using [Streamlit](https://www.streamlit.io/). This App has been created by JHB_ss3_classification_team.
+This repository hosts the files needed to deploy **Climate Change Tweet Classifier App**, which was built using [Streamlit](https://www.streamlit.io/). This App was created by JHB_ss3_classification_team.
 
 ##### Description of files
 
