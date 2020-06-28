@@ -91,7 +91,7 @@ def main():
 	if selection == "What is climate change?":
 		st.image('resources/imgs/climate-cold.jpg',use_column_width= True)
 		st.markdown("<h2 style='text-align: center; color: #3498DB;'>What Is Climate Change?</h2>", unsafe_allow_html=True)
-		st.markdown("<p style='text-align: center; color: #3498DB;'>Climate change, also called global warming, refers to the rise in average surface temperatures on Earth. An overwhelming scientific consensus maintains that climate change is due primarily to the human use of fossil fuels, which releases carbon dioxide and other greenhouse gases into the air. The gases trap heat within the atmosphere, which can have a range of effects on ecosystems, including rising sea levels, severe weather events, and droughts that render landscapes more susceptible to wildfires.</p>", unsafe_allow_html=True)
+		st.markdown(open("resources/What_is_climate_change.md").read())
 		video_file = open('resources/imgs/climate_change.mp4', 'rb')
 		video_bytes = video_file.read()
 		st.video(video_bytes)
@@ -104,7 +104,7 @@ def main():
 		st.info("Which classification model would you like to use?")
 
 		#selection of linear regression model
-		if st.button("Linear Regression"):
+		if st.button("Linear SVC Regression"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
@@ -135,7 +135,8 @@ def main():
 	# Building About model page
 	if selection == "About classification models":
 		st.image("resources/imgs/ai-header.png")
-		st.markdown("<h2 style='text-align: center; color: #3498DB;'>LinearSVC</h2>", unsafe_allow_html=True)
+		st.markdown("<h2 style='text-align: center; color: #3498DB;'>What Is Classification?</h2>", unsafe_allow_html=True)
+		st.markdown(open("resources/About_class_models.md").read())
 
 	# Building out the "About this App" page
 	if selection == "About this App":
@@ -143,7 +144,8 @@ def main():
 		st.subheader("About this App")
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/About_file.md').read())
-		st.image('resources/imgs/EDSA_logo.png')		
+		st.image('resources/imgs/EDSA_logo.png')
+		
 
 
 # Required to let Streamlit instantiate our web app.  
