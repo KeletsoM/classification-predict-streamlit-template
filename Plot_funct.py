@@ -106,4 +106,4 @@ def plot_wordcloud(data):
         
         """
         plt.figure(figsize = (15,8))
-        plt.imshow(WordCloud(max_words = 100 , width = 1000 , height = 600).generate(" ".join(data)) , interpolation = 'bilinear')
+        plt.imshow(WordCloud(max_words = 100 ,background_color ='white', width = 1000 , height = 600).generate(" ".join(data)) , interpolation = 'bilinear')

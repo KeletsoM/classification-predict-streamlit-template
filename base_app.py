@@ -7,7 +7,7 @@ import joblib,os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-sns.set_style('darkgrid')
+sns.set_style('white')
 import re 
 import string
 from nltk.stem import WordNetLemmatizer
