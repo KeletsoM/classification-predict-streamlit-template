@@ -28,7 +28,7 @@ def tweet_occurence_graph(dataframe, sentiment, pattern='twitter_handle', top_n=
     Bar graph
        A horizontal bar graph   
     """
-    
+    sns.set_style('darkgrid')
     # I.D twitter handle and hashtags patterns
     twitter_handle_pattern = r'@\w*\d*'
     hashtag_pattern = r'#\w*\d*'
@@ -73,6 +73,7 @@ def character_length(data):
     data: DataFrame.
     
     """
+    sns.set_style('darkgrid')
     fig, ax = plt.subplots(figsize=(8, 7))
     charlen=data['message'].str.len()
     charlen_sentiment=pd.concat([pd.DataFrame(charlen),data['sentiment']],axis=1)
@@ -90,7 +91,7 @@ def wordcount(data):
         data: DataFrame.
         
         """
-        
+        sns.set_style('darkgrid')
         word_count=data['message'].apply(lambda x: len(x.split()))
         wordcount_sentiment=pd.concat([pd.DataFrame(word_count),data['sentiment']],axis=1)
         ax = sns.catplot(x="sentiment", y="message",kind='boxen', data=wordcount_sentiment)
