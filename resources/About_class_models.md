@@ -7,6 +7,6 @@ There are many models that can be used for classification, in this App four were
 - Linear SVC Regression
 - Logistic Regression
 - Voting Classifier
-- Complement Naive Baye
+- Complement Naive Bayes
 
 To learn more about classification, please visit this page: https://brilliant.org/wiki/classification/
