@@ -122,7 +122,7 @@ def main():
 		st.info("Which classification model would you like to use?")
 
 		#selection of linear regression model
-		if st.button(("Linear SVC Regression"):
+		if st.button("Linear SVC Regression"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
