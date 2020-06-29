@@ -2,6 +2,8 @@ import re
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+from wordcloud import WordCloud
+
 
 def tweet_occurence_graph(dataframe, sentiment, pattern='twitter_handle', top_n=5, color='darkblue'):
     """
@@ -62,3 +64,46 @@ def tweet_occurence_graph(dataframe, sentiment, pattern='twitter_handle', top_n=
     plt.title(f'Number of Occurences for {target[sentiment]} category')
 
 
+def character_length(data):
+    """
+    Returns a graph showing distribution of character length on each sentiment
+
+     Parameters
+    -----------
+    data: DataFrame.
+    
+    """
+    fig, ax = plt.subplots(figsize=(8, 7))
+    charlen=data['message'].str.len()
+    charlen_sentiment=pd.concat([pd.DataFrame(charlen),data['sentiment']],axis=1)
+    sns.kdeplot(charlen_sentiment['message'][charlen_sentiment['sentiment'] == -1],label='anti')
+    sns.kdeplot(charlen_sentiment['message'][charlen_sentiment['sentiment'] == 0],label='neutral')
+    sns.kdeplot(charlen_sentiment['message'][charlen_sentiment['sentiment'] == 1],label='pro')
+    sns.kdeplot(charlen_sentiment['message'][charlen_sentiment['sentiment'] == 2],label='news')
+
+def wordcount(data):
+        """
+        Returns a graph showing distribution of word count for each sentiment
+
+        Parameters
+        -----------
+        data: DataFrame.
+        
+        """
+        
+        word_count=data['message'].apply(lambda x: len(x.split()))
+        wordcount_sentiment=pd.concat([pd.DataFrame(word_count),data['sentiment']],axis=1)
+        ax = sns.catplot(x="sentiment", y="message",kind='boxen', data=wordcount_sentiment)
+        plt.ylabel('Word count', fontsize=12)
+
+def plot_wordcloud(data):
+        """
+        Returns Wordcloud plot of top 100 words in our tweets.
+        
+        Parameters
+        -----------
+        data: DataFrame column that contains tweets.
+        
+        """
+        plt.figure(figsize = (15,8))
+        plt.imshow(WordCloud(max_words = 100 , width = 1000 , height = 600).generate(" ".join(data)) , interpolation = 'bilinear')
