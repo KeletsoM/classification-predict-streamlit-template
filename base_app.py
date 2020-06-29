@@ -160,7 +160,7 @@ def main():
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
-			predictor = joblib.load(open(os.path.join("resources/voting_classifier.pkl"),"rb"))
+			predictor = joblib.load(open(os.path.join("resources/complement_naive_bayes.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
 			# When model has successfully run, will print prediction
