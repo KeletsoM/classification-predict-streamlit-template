@@ -62,7 +62,7 @@ def main():
 		if st.checkbox("Show distribution of the data"):	
 			raw['sentiment'].value_counts().plot(kind='pie', autopct='%.1f', labels=['Pro','News','Neutral','Anti'])
 			st.pyplot()
-			st.info("The categories in the above data is clearly unbalanced. We can see that 53.9% of the tweets supports the belief of man-made climate change (Pro), 23.0% are based on factual news about climate change (News), 14,9% of the tweets are rather neutral on the subject (Neutral), and 8.2% do not believe in man-made climate change (Anti). ")
+			st.info("The categories in the above data is clearly unbalanced. We can see that 52.3% of the tweets supports the belief of man-made climate change (Pro), 21.1% are based on factual news about climate change (News), 17.6% of the tweets are rather neutral on the subject (Neutral), and 9.1% do not believe in man-made climate change (Anti). ")
 
 		if st.checkbox("Distribution of word count"):
 			st.info("The graph below shows the distribution of word counts")
@@ -79,15 +79,15 @@ def main():
 			st.pyplot()
 
 		#Build the most mentiond twitter handle
-		if st.checkbox("Show Most mentioned Twitter account"):
+		if st.checkbox("Show most mentioned Twitter account"):
 
-			st.info("The graph below shows the most occuring twitter handle amomst the different sentiment groups")
+			st.info("The graph below shows the most occurring twitter handle amongst the different sentiment groups")
 			opt2 = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'],key='Pro')
 			tweet_occurence_graph(raw, sentiment=sent_dict[opt2], top_n=10, color='cadetblue')
 			st.pyplot()
 		
 		if st.checkbox("Show most occurring hashtags"):
-			st.info("The graph below shows the most occuring hashtags amomst the different sentiment groups")
+			st.info("The graph below shows the most occurring hashtags amongst the different sentiment groups")
 			opt = st.selectbox("Select sentiment group",['Anti','Neutral','Pro','Factual news'])
 			tweet_occurence_graph(raw, sentiment= sent_dict[opt],pattern="hashtags", top_n=10, color='cadetblue')
 			st.pyplot()
@@ -100,7 +100,7 @@ def main():
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/info.md').read())
 		#shows a sample of raw data 
-		st.subheader("Exploratory data analysis of the data used to built the models")
+		
 		if st.checkbox("Show a sample of the raw data"): # data is hidden if box is unchecked
 			#st.write(raw['message'].head().values,) # will write the df to the page
 			st.table(raw[['message', 'sentiment']].head())
@@ -109,7 +109,7 @@ def main():
 	if selection == "What is climate change?":
 		st.image('resources/imgs/climate-cold.jpg',use_column_width= True)
 		st.markdown("<h2 style='text-align: center; color: #3498DB;'>What Is Climate Change?</h2>", unsafe_allow_html=True)
-		st.markdown("<p style='text-align: center; color: #3498DB;'>Climate change, also called global warming, refers to the rise in average surface temperatures on Earth. An overwhelming scientific consensus maintains that climate change is due primarily to the human use of fossil fuels, which releases carbon dioxide and other greenhouse gases into the air. The gases trap heat within the atmosphere, which can have a range of effects on ecosystems, including rising sea levels, severe weather events, and droughts that render landscapes more susceptible to wildfires.</p>", unsafe_allow_html=True)
+		st.markdown(open("resources/What_is_climate_change.md").read())
 		video_file = open('resources/imgs/climate_change.mp4', 'rb')
 		video_bytes = video_file.read()
 		st.video(video_bytes)
@@ -122,16 +122,14 @@ def main():
 		st.info("Which classification model would you like to use?")
 
 		#selection of linear regression model
-		if st.button("LinearSVC"):
+		if st.button(("Linear SVC Regression"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
 			# Load your .pkl file with the model of your choice + make predictions
 			predictor = joblib.load(open(os.path.join("resources/linear_svc.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
+			
 
 		# selection of random forest model 
 		if st.button("Logistic regression"):
@@ -141,9 +139,7 @@ def main():
 			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
+			
 
 		if st.button("Voting Classifier"):
 			# Transforming user input with vectorizer
@@ -152,10 +148,7 @@ def main():
 			predictor = joblib.load(open(os.path.join("resources/voting_classifier.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
-
+			
 		if st.button("Compliment Naive Bayes"):
 			# Transforming user input with vectorizer
 			vect_text = tweet_cv.transform([tweet_text]).toarray()
@@ -163,23 +156,24 @@ def main():
 			predictor = joblib.load(open(os.path.join("resources/complement_naive_bayes.pkl"),"rb"))
 			prediction = predictor.predict(vect_text)
 			pred(prediction)
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
+			
 
 		
 
 	# Building About model page
 	if selection == "About classification models":
 		st.image("resources/imgs/ai-header.png")
-		st.markdown("<h2 style='text-align: center; color: #3498DB;'>LinearSVC</h2>", unsafe_allow_html=True)
+		st.markdown("<h2 style='text-align: center; color: #3498DB;'>What Is Classification?</h2>", unsafe_allow_html=True)
+		st.markdown(open("resources/About_class_models.md").read())
+
 	# Building out the "About this App" page
 	if selection == "About this App":
 		st.image('resources/imgs/blackboard.jpg',use_column_width=True)
 		st.subheader("About this App")
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/About_file.md').read())
-		st.image('resources/imgs/EDSA_logo.png')		
+		st.image('resources/imgs/EDSA_logo.png')
+		st.image('resources/imgs/kaggle-logo.png', use_column_width= True)		
 
 
 # Required to let Streamlit instantiate our web app.  
